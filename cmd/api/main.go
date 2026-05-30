@@ -37,6 +37,12 @@ func main() {
 		}
 	}()
 
+	// Load API Keys
+	if err := middleware.LoadAPIKeys("config/api_keys.json"); err != nil {
+		slog.Error("Failed to load API keys", "error", err)
+		os.Exit(1)
+	}
+
 	// 1. Database Connection (PostgreSQL)
 	pgDSN := os.Getenv("DATABASE_URL")
 	if pgDSN == "" {

@@ -1,7 +1,11 @@
 package middleware
 
 import (
+	"encoding/json"
+	"log/slog"
 	"net/http"
+	"os"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,11 +16,21 @@ const (
 	TenantContextKey = "tenant_id"
 )
 
-// In a real application, this would be stored in a database, LDAP, or secret manager.
-var apiKeyMap = map[string]string{
-	"tenant-a": "key-alpha-123",
-	"tenant-b": "key-beta-456",
-	"tenant-c": "key-gamma-789",
+var (
+	apiKeyMap = make(map[string]string)
+	mu        sync.RWMutex
+)
+
+// LoadAPIKeys loads keys from a JSON file. In production, this might be a vault call or a DB lookup.
+func LoadAPIKeys(path string) error {
+	file, err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+
+	mu.Lock()
+	defer mu.Unlock()
+	return json.Unmarshal(file, &apiKeyMap)
 }
 
 func AuthMiddleware() gin.HandlerFunc {
@@ -29,8 +43,12 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		mu.RLock()
 		expectedKey, exists := apiKeyMap[tenantID]
+		mu.RUnlock()
+
 		if !exists || expectedKey != apiKey {
+			slog.Warn("Unauthorized access attempt", "tenant_id", tenantID)
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "invalid tenant id or api key"})
 			return
 		}
