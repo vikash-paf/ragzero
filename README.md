@@ -3,11 +3,13 @@
 Ragzero is a high-performance, multi-tenant document search service built with Go, Elasticsearch, Redis, and PostgreSQL. It is designed to handle millions of documents with sub-500ms latency.
 
 ## Architecture Highlights
-- **Multi-Tenancy:** Strict isolation using header-based `X-Tenant-Id` enforcement.
+- **Multi-Tenancy:** Strict isolation using `X-Tenant-Id` and `X-API-Key` header enforcement.
 - **Eventual Consistency:** Asynchronous indexing via internal worker pools for high write availability.
+- **Observability:** Distributed tracing with OpenTelemetry and structured JSON logging.
 - **Caching:** L2 query results caching using Redis (Cache-Aside pattern).
-- **Rate Limiting:** Per-tenant rate limiting to prevent "noisy neighbor" issues.
+- **Rate Limiting:** Per-tenant rate limiting to prevent noisy neighbor issues.
 - **Search Engine:** Elasticsearch with BM25 relevance ranking, fuzzy matching, and result highlighting.
+
 
 ## Prerequisites
 - Docker & Docker Compose
