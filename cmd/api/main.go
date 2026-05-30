@@ -28,8 +28,8 @@ func main() {
 	}
 	defer pgPool.Close()
 
-	if err := repository.EnsureSchema(ctx, pgPool); err != nil {
-		log.Fatal("Failed to ensure database schema: ", err)
+	if err := repository.RunMigrations(pgDSN); err != nil {
+		log.Fatal("Failed to run migrations: ", err)
 	}
 
 	redisAddr := os.Getenv("REDIS_ADDR")

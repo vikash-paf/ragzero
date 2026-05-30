@@ -57,17 +57,3 @@ func (r *postgresDocumentRepo) Delete(ctx context.Context, id string, tenantID s
 	return nil
 }
 
-func EnsureSchema(ctx context.Context, pool *pgxpool.Pool) error {
-	query := `
-		CREATE TABLE IF NOT EXISTS documents (
-			id TEXT PRIMARY KEY,
-			tenant_id TEXT NOT NULL,
-			title TEXT NOT NULL,
-			content TEXT NOT NULL,
-			created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-		);
-		CREATE INDEX IF NOT EXISTS idx_documents_tenant ON documents(tenant_id);
-	`
-	_, err := pool.Exec(ctx, query)
-	return err
-}
