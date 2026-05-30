@@ -28,8 +28,10 @@ lint:
 # Usage: make migrate-new name=your_migration_name
 migrate-new:
 	@read -p "Enter migration name: " name; \
-	touch migrations/$$(date +%s)_$${name}.up.sql; \
-	touch migrations/$$(date +%s)_$${name}.down.sql
+	VERSION=$$(date +%s); \
+	touch migrations/$${VERSION}_$${name}.up.sql; \
+	touch migrations/$${VERSION}_$${name}.down.sql; \
+	echo "Created migrations/$${VERSION}_$${name}.up.sql and .down.sql"
 
 # Clean build artifacts
 clean:
