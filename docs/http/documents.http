@@ -1,0 +1,29 @@
+### Create Document (Tenant A)
+POST http://localhost:8080/documents
+Content-Type: application/json
+X-Tenant-Id: tenant-a
+
+{
+  "id": "doc-1",
+  "title": "Introduction to Distributed Systems",
+  "content": "A distributed system is a system whose components are located on different networked computers, which communicate and coordinate their actions by passing messages to one another."
+}
+
+### Create Document (Tenant B)
+POST http://localhost:8080/documents
+Content-Type: application/json
+X-Tenant-Id: tenant-b
+
+{
+  "id": "doc-2",
+  "title": "Vector Databases in RAG",
+  "content": "Vector databases are optimized for storing and querying high-dimensional vectors, making them ideal for Retrieval Augmented Generation (RAG) workflows."
+}
+
+### Get Document Details
+GET http://localhost:8080/documents/doc-1
+X-Tenant-Id: tenant-a
+
+### Delete Document
+DELETE http://localhost:8080/documents/doc-1
+X-Tenant-Id: tenant-a
