@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"log"
+	"log/slog"
 
 	"github.com/vikash-paf/ragzero/internal/models"
 	"github.com/vikash-paf/ragzero/internal/repository"
@@ -21,7 +21,7 @@ func NewIndexerWorker(searchRepo repository.SearchRepository, indexChan <-chan *
 }
 
 func (w *IndexerWorker) Start(ctx context.Context) {
-	log.Println("Indexer worker started...")
+	slog.Info("Indexer worker started")
 	for {
 		select {
 		case doc, ok := <-w.indexChan:
@@ -29,7 +29,7 @@ func (w *IndexerWorker) Start(ctx context.Context) {
 				return
 			}
 			if err := w.searchRepo.Index(ctx, doc); err != nil {
-				log.Printf("Failed to index document %s: %v", doc.ID, err)
+				slog.Error("Failed to index document", "id", doc.ID, "error", err)
 			}
 		case <-ctx.Done():
 			return

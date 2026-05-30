@@ -3,7 +3,7 @@ package repository
 import (
 	"errors"
 	"fmt"
-	"log"
+	"log/slog"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
@@ -24,6 +24,6 @@ func RunMigrations(databaseURL string) error {
 		return fmt.Errorf("run up migrations: %w", err)
 	}
 
-	log.Println("Migrations completed successfully")
+	slog.Info("Migrations completed successfully")
 	return nil
 }
