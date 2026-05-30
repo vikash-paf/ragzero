@@ -57,8 +57,9 @@ func (r *elasticsearchRepo) Search(ctx context.Context, req *models.SearchReques
 				"must": []map[string]interface{}{
 					{
 						"multi_match": map[string]interface{}{
-							"query":  req.Query,
-							"fields": []string{"title^2", "content"},
+							"query":     req.Query,
+							"fields":    []string{"title^2", "content"},
+							"fuzziness": "AUTO",
 						},
 					},
 				},
@@ -69,6 +70,12 @@ func (r *elasticsearchRepo) Search(ctx context.Context, req *models.SearchReques
 						},
 					},
 				},
+			},
+		},
+		"highlight": map[string]interface{}{
+			"fields": map[string]interface{}{
+				"title":   map[string]interface{}{},
+				"content": map[string]interface{}{},
 			},
 		},
 		"size": req.Limit,
@@ -112,11 +119,24 @@ func (r *elasticsearchRepo) Search(ctx context.Context, req *models.SearchReques
 		item := hit.(map[string]interface{})
 		source := item["_source"].(map[string]interface{})
 		
-		searchRes.Results = append(searchRes.Results, models.SearchResult{
+		resItem := models.SearchResult{
 			ID:    item["_id"].(string),
 			Title: source["title"].(string),
 			Score: item["_score"].(float64),
-		})
+		}
+
+		if h, ok := item["highlight"].(map[string]interface{}); ok {
+			resItem.Highlight = make(map[string][]string)
+			for k, v := range h {
+				var highlights []string
+				for _, snippet := range v.([]interface{}) {
+					highlights = append(highlights, snippet.(string))
+				}
+				resItem.Highlight[k] = highlights
+			}
+		}
+
+		searchRes.Results = append(searchRes.Results, resItem)
 	}
 
 	return searchRes, nil

@@ -18,9 +18,10 @@ type SearchRequest struct {
 }
 
 type SearchResult struct {
-	ID    string  `json:"id"`
-	Title string  `json:"title"`
-	Score float64 `json:"score"`
+	ID        string              `json:"id"`
+	Title     string              `json:"title"`
+	Score     float64             `json:"score"`
+	Highlight map[string][]string `json:"highlight,omitempty"`
 }
 
 type SearchResponse struct {
