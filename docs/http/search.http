@@ -1,11 +1,14 @@
 ### Search Documents (Tenant A - Should find Distributed Systems)
 GET http://localhost:8080/search?q=distributed
 X-Tenant-Id: tenant-a
+X-API-Key: key-alpha-123
 
 ### Search Documents (Tenant B - Should find Vector Databases)
 GET http://localhost:8080/search?q=vector
 X-Tenant-Id: tenant-b
+X-API-Key: key-beta-456
 
 ### Cross-Tenant Search Check (Tenant A - Should NOT find Vector Databases)
 GET http://localhost:8080/search?q=vector
 X-Tenant-Id: tenant-a
+X-API-Key: key-alpha-123

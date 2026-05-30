@@ -2,6 +2,7 @@
 POST http://localhost:8080/documents
 Content-Type: application/json
 X-Tenant-Id: tenant-a
+X-API-Key: key-alpha-123
 
 {
   "id": "doc-1",
@@ -13,6 +14,7 @@ X-Tenant-Id: tenant-a
 POST http://localhost:8080/documents
 Content-Type: application/json
 X-Tenant-Id: tenant-b
+X-API-Key: key-beta-456
 
 {
   "id": "doc-2",
@@ -23,7 +25,9 @@ X-Tenant-Id: tenant-b
 ### Get Document Details
 GET http://localhost:8080/documents/doc-1
 X-Tenant-Id: tenant-a
+X-API-Key: key-alpha-123
 
 ### Delete Document
 DELETE http://localhost:8080/documents/doc-1
 X-Tenant-Id: tenant-a
+X-API-Key: key-alpha-123
