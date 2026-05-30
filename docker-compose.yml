@@ -43,6 +43,8 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
+    volumes:
+      - redis_data:/data
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
@@ -64,3 +66,4 @@ services:
 volumes:
   postgres_data:
   es_data:
+  redis_data:

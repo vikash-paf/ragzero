@@ -12,8 +12,12 @@ run:
 up:
 	docker-compose up -d --build
 
-# Stop and remove all Docker containers
+# Stop and remove all Docker containers (preserves data)
 down:
+	docker-compose down
+
+# Stop and remove all Docker containers AND wipe all data (volumes)
+clean-infra:
 	docker-compose down -v
 
 # Run tests
