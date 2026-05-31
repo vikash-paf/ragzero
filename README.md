@@ -27,4 +27,7 @@ The complete system design, production readiness analysis, and technical deep-di
 - [Architecture & Design Document](./docs/DESIGN.md)
 
 ### 3. API Testing
-Sample API requests are available in the [docs/http/](./docs/http/) directory. These can be used to verify system functionality, including fuzzy search and multi-tenancy isolation.
+Sample API requests and lifecycle tests are available in the [docs/http/](./docs/http/) directory. These can be used to verify system functionality, including fuzzy search and multi-tenancy isolation.
+
+## License
+This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). See the [LICENSE](./LICENSE) file for details.
