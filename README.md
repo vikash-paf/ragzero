@@ -22,5 +22,9 @@ Ragzero is a high-performance, multi-tenant document search service built with G
 make up
 ```
 
-### 2. API Testing
+### 2. Architecture & Design
+The complete system design, production readiness analysis, and technical deep-dives are available here:
+- [Architecture & Design Document](./docs/DESIGN.md)
+
+### 3. API Testing
 Sample API requests are available in the [docs/http/](./docs/http/) directory. These can be used to verify system functionality, including fuzzy search and multi-tenancy isolation.
